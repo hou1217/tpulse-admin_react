@@ -2,7 +2,6 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import loadable from './utils/loadable'
 import './style/App.css';
-import TodoList from './demo/TodoList'
 
 // 公共模块
 const DefaultLayout = loadable(() => import(/* webpackChunkName: 'default' */ './containers'))
@@ -12,7 +11,7 @@ const View404 = loadable(() => import(/* webpackChunkName: '404' */ './views/Oth
 const View500 = loadable(() => import(/* webpackChunkName: '500' */ './views/Others/500'))
 const Login = loadable(() => import(/* webpackChunkName: 'login' */ './views/Login'))
 function App() {
-  return <TodoList/>
+  
   return (
     <Router>
       <Switch>
