@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import store from '../store'
-import {connect} from 'react-redux'
 import {changeInputAction,addItemAction,deleteItemAction} from '../store/actionCreators'
 import TodoListUI from './TodoListUI'
 
@@ -45,8 +44,5 @@ class TodoList extends Component {
     />;
   }
 }
- 
-const stateToProps = ()=>{
-  return
-}
-export default connect(stateToProps,null)(TodoList);
+
+export default TodoList;
