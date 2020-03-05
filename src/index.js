@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css';
-// import App from './App';
+import App from './App';
 // import * as serviceWorker from './serviceWorker';
-import TodoList from './demo/TodoList'
+// import TodoList from './demo/TodoList'
+// import TodoList from './hooksDemo/TodoList'
 import {Provider} from 'react-redux'
 import store from './store'
 const AppView = (
   <Provider store={store}>
-    <TodoList />
+    <App />
   </Provider>
 )
 ReactDOM.render(AppView, document.getElementById('root'));
