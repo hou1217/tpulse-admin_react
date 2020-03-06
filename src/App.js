@@ -1,27 +1,37 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import loadable from './utils/loadable'
+// import loadable from './utils/loadable'
+import {Button} from 'antd';
 import './style/App.css';
-
+import {adminRoutes} from './routes'
 // 公共模块
-const DefaultLayout = loadable(() => import(/* webpackChunkName: 'default' */ './containers'))
-
+// const DefaultLayout = loadable(() => import(/* webpackChunkName: 'default' */ './containers'))
+import Frame from './components/frame'
+import {isLogin} from './utils/auth'
 // 基础页面
-const View404 = loadable(() => import(/* webpackChunkName: '404' */ './views/Others/404'))
-const View500 = loadable(() => import(/* webpackChunkName: '500' */ './views/Others/500'))
-const Login = loadable(() => import(/* webpackChunkName: 'login' */ './views/Login'))
+
 function App() {
   
-  return (
-    <Router>
+  return (isLogin()?
+    <Frame>
       <Switch>
-        <Route path='/' exact render={() => <Redirect to='/login' />} />
-        <Route path='/500' component={View500} />
-        <Route path='/login' component={Login} />
-        <Route path='/404' component={View404} />
-        <Route component={DefaultLayout} />
+        {adminRoutes.map(route=>{
+          return(
+            <Route 
+              key={route.path} 
+              path={route.path}
+              exact={route.exact}
+              render={routeProps=>{
+                return <route.component {...routeProps}/>
+              }}>
+            </Route>
+          ) 
+        })}
+        <Redirect to={adminRoutes[0].path} from="/admin"></Redirect>
+        <Redirect to="/404"></Redirect>
+
       </Switch>
-    </Router>
+    </Frame>: <Redirect to="/login"></Redirect>
   );
 }
 
