@@ -3,7 +3,8 @@ import { Form, Input, Button, Checkbox,message,Card,notification,Layout,Divider,
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '@/style/view-style/login.scss'
 import {setToken} from '@/utils/auth'
-
+import loginApi from '@/service/login'
+import md5 from 'md5'
 const Login = (props) => {
   const {getFieldDecorator} = props.form
   const handleSubmit = e=>{
@@ -14,8 +15,18 @@ const Login = (props) => {
         console.log(values);
         console.log('提交');
         // api
-        setToken(values.username);
-        props.history.push("/admin")
+        loginApi.loginPhone(Object.assign({appId:'tpulse'},{phoneNum:values.username,password:md5(values.password)}))
+        .then((res) => {
+          console.log('登陆成功');
+          console.log(res);
+          message.success('登陆成功');
+          props.history.push("/admin")
+
+        })
+        .catch((err)=>{
+          console.error('数据异常：', err);
+          // message.error(err.data)
+        });
       }else{
         message.error('请正确输入内容！')
       }

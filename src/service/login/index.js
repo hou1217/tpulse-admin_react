@@ -1,7 +1,10 @@
 import axios from 'axios'
-let instance = axios.create();
 const APP_HOST = process.env.REACT_APP_APP_HOST;
-console.log(process.env.REACT_APP_APP_HOST);
+
+let instance = axios.create({
+  baseURL:APP_HOST,
+  timeout:5000
+});
 export default{
   
   loginPhone(params){
@@ -9,7 +12,7 @@ export default{
     console.log(params);
     localStorage.setItem('USER_NAME', params.appUid || params.phoneNum);
     
-    let url = APP_HOST + '/authenticate-app/account/login/phone/pswd';
+    let url =  '/authenticate-app/account/login/phone/pswd';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -46,7 +49,7 @@ export default{
   register(params){
     console.log('调用注册接口');
     console.log(params);
-    let url = APP_HOST + '/authenticate-app/account/register/phone/do-register';
+    let url =  '/authenticate-app/account/register/phone/do-register';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -71,7 +74,7 @@ export default{
   resetPassword(params){
     console.log('重置密码');
     console.log(params);
-    let url = APP_HOST + '/authenticate-app/account/pswd/reset/phone/do-reset';
+    let url =  '/authenticate-app/account/pswd/reset/phone/do-reset';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -96,7 +99,7 @@ export default{
   getCode(params){
     console.log('调用注册接口');
     console.log(params);
-    let url = APP_HOST + '/authenticate-app/account/register/phone/send-code';
+    let url =  '/authenticate-app/account/register/phone/send-code';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -121,7 +124,7 @@ export default{
   getResetCode(params){
     console.log('调用注册接口');
     console.log(params);
-    let url = APP_HOST + '/authenticate-app/account/pswd/reset/phone/send-code';
+    let url =  '/authenticate-app/account/pswd/reset/phone/send-code';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -144,7 +147,7 @@ export default{
     })
   },
   getRouterList(params){
-    const url = APP_HOST + '/security-app/permission/vue/router/list';
+    const url =  '/security-app/permission/vue/router/list';
     return new Promise((resolve,reject) => {
       instance({
         method: 'POST',
@@ -174,7 +177,7 @@ export default{
    */
   logout(){
     console.log('调用退出接口');
-    const url = APP_HOST + '/security-app/app/logout';
+    const url =  '/security-app/app/logout';
     return new Promise((resolve,reject) => {
       instance({
         method: 'POST',

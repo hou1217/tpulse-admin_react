@@ -1,5 +1,6 @@
-import React from 'react';
-import {Form,Card,Input,Button,message} from 'antd';
+import React,{useState,useEffect} from 'react';
+import {Form,Card,Input,Button,message,Radio } from 'antd';
+import rightsApi from '@/service/rights'
 
 const Edit = (props) => {
   const {getFieldDecorator} = props.form
@@ -10,6 +11,22 @@ const Edit = (props) => {
       callback()
     }
   }
+  // props.match.params.id是否存在
+  const [currentData,setCurrentData] = useState({})
+  useEffect(()=>{
+    if(props.match.params.id){
+      console.log(props.match.params.id);
+
+      rightsApi.getRoleDetail({
+        id: props.match.params.id
+      })
+      .then((res)=>{
+        console.log(res);
+        setCurrentData(res.data)
+      })
+    }
+  },[])
+  
   const handleSubmit = e=>{
     console.log(e);
     e.preventDefault();
@@ -17,7 +34,31 @@ const Edit = (props) => {
       if(!err){
         console.log(values);
         console.log('提交');
-        // api
+        // 判断是新增还是修改
+        if(props.match.params.id){
+          rightsApi.updateRole({
+            id:props.match.params.id,
+            ...values
+          })
+          .then(res=>{
+            console.log(res);
+            props.history.push("/admin/products")
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+        }else{
+          // api
+          rightsApi.createRole(values)
+          .then(res=>{
+            console.log(res);
+            props.history.push("/admin/products")
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+        }
+        
       }else{
         message.error('请正确输入内容！')
       }
@@ -35,12 +76,13 @@ const Edit = (props) => {
                 message:"请输入商品名字"
               }
               
-            ]
+            ],
+            initialValue:currentData.name
           })(<Input placeholder="请输入商品名称"></Input>)
         }
           
         </Form.Item>
-        <Form.Item label="价格">
+        {/* <Form.Item label="价格">
         {
           getFieldDecorator("price",{
             rules:[
@@ -53,6 +95,24 @@ const Edit = (props) => {
               }
             ]
           })(<Input placeholder="请输入商品价格"></Input>)
+        }
+          
+        </Form.Item> */}
+        <Form.Item label="管理员">
+        {
+          getFieldDecorator("root",{
+            rules:[
+              {
+                required:true,
+                message:"请选择是否是管理员"
+              }
+              
+            ],
+            initialValue:currentData.root
+          })(<Radio.Group >
+            <Radio value={true}>是</Radio>
+            <Radio value={false}>否</Radio>
+          </Radio.Group>)
         }
           
         </Form.Item>

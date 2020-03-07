@@ -1,16 +1,16 @@
 export function getToken() {
-  return localStorage.getItem("token")
+  return localStorage.getItem("ticket")
 }
-export function setToken(token) {
-  localStorage.setItem("token",token)
+export function setToken(ticket) {
+  localStorage.setItem("ticket",ticket)
 }
-export function isLogin(token) {
-  if(localStorage.getItem("token")){
+export function isLogin(ticket) {
+  if(localStorage.getItem("ticket")){
     return true
   }else{
     return false
   }
 }
-export function clearToken(token) {
-  localStorage.removeItem("token")
+export function clearToken(ticket) {
+  localStorage.removeItem("ticket")
 }

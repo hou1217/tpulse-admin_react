@@ -9,20 +9,19 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux'
 import store from './store'
 const AppView = (
-  // <Provider store={store}>
-  //   <App/>
-  // </Provider>
-  <Router>
-    <Switch>
-      <Route path="/admin" render={routeProps => <App {...routeProps}/>}></Route>
-      {mainRoutes.map(route=>{
-        return <Route key={route.path} {...route}></Route>
-      })}
-      <Redirect to="admin" from="/"></Redirect>
-      <Redirect to="404"></Redirect>
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route path="/admin" render={routeProps => <App {...routeProps}/>}></Route>
+        {mainRoutes.map(route=>{
+          return <Route key={route.path} {...route}></Route>
+        })}
+        <Redirect to="admin" from="/"></Redirect>
+        <Redirect to="404"></Redirect>
 
-    </Switch>
-  </Router>
+      </Switch>
+    </Router>
+  </Provider>
 )
 ReactDOM.render(AppView, document.getElementById('root'));
 
