@@ -12,7 +12,7 @@ export default{
     console.log(params);
     localStorage.setItem('USER_NAME', params.appUid || params.phoneNum);
     
-    let url =  '/authenticate-app/account/login/phone/pswd';
+    let url =  '/security-app/authenticate/login/phone';
     return new Promise((resolve,reject) => {
 
       instance({
@@ -24,14 +24,7 @@ export default{
         console.log(res);
      
         if(res.data.state === '000000'){
-          this.setSession(
-            {
-              "WALLAN-TOKEN": res.data.data.token,
-              "ROLE-LIST": res.data.data.roleNameList?res.data.data.roleNameList:[]
-            }
-          );
           resolve(res.data);
-         
         }else{
           reject(res)
         }
@@ -194,10 +187,5 @@ export default{
         reject(err)
       });
     })
-  },
-  setSession(params) {
-    if (typeof params === 'object') {
-      localStorage.setItem('ticket', JSON.stringify(params));
-    }
-  },
+  }
 }

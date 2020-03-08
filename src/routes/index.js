@@ -1,7 +1,8 @@
 import Login from '@/views/login/Login'
 import Index from '@/views/admin/dashboard/Index'
-import List from '@/views/admin/products/List'
-import Edit from '@/views/admin/products/Edit'
+import ActivityType from '@/views/admin/products/activityType'
+import ActivityList from '@/views/admin/products/activityList'
+import ActivityEdit from '@/views/admin/products/activityEdit'
 import PageNotFound from '@/views/others/404'
 
 export const mainRoutes = [
@@ -23,14 +24,29 @@ export const adminRoutes = [
     icon:'area-chart'
   },
   {
-    path:"/admin/products",
-    component:List,
+    path:"/admin/huodong",
     exact:true,
-    title:'商品管理',
-    icon:'shop'
+    title:'活动管理',
+    icon:'shop',
+    children:[
+      {
+        path:"/admin/activityType",
+        component:ActivityType,
+        exact:true,
+        title:'活动类型',
+        icon:'shop',
+      },
+      {
+        path:"/admin/activityList",
+        component:ActivityList,
+        exact:true,
+        title:'活动列表',
+        icon:'shop',
+      },
+    ]
   },
   {
-    path:"/admin/products/edit/:id?",
-    component:Edit
+    path:"/admin/activity/edit/:id?",
+    component:ActivityEdit
   },
 ]

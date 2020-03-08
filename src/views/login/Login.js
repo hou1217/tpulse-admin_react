@@ -20,6 +20,7 @@ const Login = (props) => {
           console.log('登陆成功');
           console.log(res);
           message.success('登陆成功');
+          setToken(res.data.authToken)
           props.history.push("/admin")
 
         })

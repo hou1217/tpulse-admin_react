@@ -16,16 +16,34 @@ function App() {
     <Frame>
       <Switch>
         {adminRoutes.map(route=>{
-          return(
-            <Route 
-              key={route.path} 
-              path={route.path}
-              exact={route.exact}
-              render={routeProps=>{
-                return <route.component {...routeProps}/>
-              }}>
-            </Route>
-          ) 
+          if (route.children && route.children.length && !route.hideChildren) {
+            return(
+              route.children.map(item=>{
+                return(
+                  <Route 
+                    key={item.path} 
+                    path={item.path}
+                    exact={item.exact}
+                    render={itemProps=>{
+                      return <item.component {...itemProps}/>
+                    }}>
+                  </Route>
+                )
+                
+              })
+            ) 
+          }else{
+            return(
+              <Route 
+                key={route.path} 
+                path={route.path}
+                exact={route.exact}
+                render={routeProps=>{
+                  return <route.component {...routeProps}/>
+                }}>
+              </Route>
+            )
+          }
         })}
         <Redirect to={adminRoutes[0].path} from="/admin"></Redirect>
         <Redirect to="/404"></Redirect>

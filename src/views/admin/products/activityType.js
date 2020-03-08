@@ -26,7 +26,7 @@ const List = (props) => {
 
   const loadData = (page,pageSize)=>{
     console.log(pageSize);
-    rightsApi.getRoleList({page:page, pageSize: pageSize})
+    rightsApi.getActivityType({page:page, pageSize: pageSize})
     .then(res=>{
       console.log(res);
       setDataSource(res.data.data)
@@ -38,7 +38,7 @@ const List = (props) => {
     })
   }
   useEffect(()=>{
-    rightsApi.getRoleList({page: 1, pageSize: 2})
+    rightsApi.getActivityType({page: 1, pageSize: 5})
     .then(res=>{
       console.log(res);
       setDataSource(res.data.data)
@@ -101,11 +101,11 @@ const List = (props) => {
     }
   }]
   return (  
-    <Card title="商品列表" extra={
+    <Card title="活动类型" extra={
       <Button 
         type="primary" 
         size="small" 
-        onClick={()=>props.history.push("/admin/products/edit")}
+        onClick={()=>props.history.push("/admin/activity/edit")}
       >
         新增
       </Button>
@@ -114,7 +114,7 @@ const List = (props) => {
         rowKey="id"
         rowClassName={record=>record.state?"":"bg-red"}
         pagination={{
-          total,defaultPageSize:2,onChange:loadData
+          total,defaultPageSize:5,onChange:loadData
         }}
         columns={columns} 
         bordered 

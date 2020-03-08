@@ -26,7 +26,7 @@ const List = (props) => {
 
   const loadData = (page,pageSize)=>{
     console.log(pageSize);
-    rightsApi.getRoleList({page:page, pageSize: pageSize})
+    rightsApi.getActivityList({page:page, pageSize: pageSize})
     .then(res=>{
       console.log(res);
       setDataSource(res.data.data)
@@ -38,7 +38,7 @@ const List = (props) => {
     })
   }
   useEffect(()=>{
-    rightsApi.getRoleList({page: 1, pageSize: 2})
+    rightsApi.getActivityList({page: 1, pageSize: 5})
     .then(res=>{
       console.log(res);
       setDataSource(res.data.data)
@@ -51,21 +51,21 @@ const List = (props) => {
 
   const columns = [{
     title:"序号",
-    key:'id',
+    key:'campaignId',
     width:80,
     align:'center',
     render:(txt,record,index) => index + 1
   },{
-    title:'名字',
+    title:'标题',
     dataIndex:'name'
   },{
-    title:'模板数量',
-    dataIndex:'templateCount'
+    title:'类型',
+    dataIndex:'type'
   },{
-    title:'上下架状态',
-    dataIndex:'state',
+    title:'活动状态',
+    dataIndex:'finalState',
     render:(txt,record)=>{
-      return record.state==='ACTIVE'?'是':'否'
+      return record.finalState
     }
   },{
     title:'操作',
@@ -75,7 +75,7 @@ const List = (props) => {
           <Button type="primary" size="small" onClick={()=>{
             // 跳转页面
             console.log(record);
-            props.history.push(`/admin/products/edit/${record.id}`)
+            props.history.push(`/admin/products/edit/${record.campaignId}`)
           }}>修改</Button>
           <Popconfirm 
             title="确定删除吗？" 
@@ -83,7 +83,7 @@ const List = (props) => {
               console.log("确认删除");
               // api
               rightsApi.deleteRole({
-                id:record.id
+                id:record.campaignId
               })
               .then(res=>{
                 console.log(res);
@@ -101,7 +101,7 @@ const List = (props) => {
     }
   }]
   return (  
-    <Card title="商品列表" extra={
+    <Card title="活动列表" extra={
       <Button 
         type="primary" 
         size="small" 
@@ -111,10 +111,10 @@ const List = (props) => {
       </Button>
     }>
       <Table 
-        rowKey="id"
+        rowKey="campaignId"
         rowClassName={record=>record.state?"":"bg-red"}
         pagination={{
-          total,defaultPageSize:2,onChange:loadData
+          total,defaultPageSize:5,onChange:loadData
         }}
         columns={columns} 
         bordered 

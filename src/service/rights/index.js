@@ -31,18 +31,10 @@ function getRightsList(params){
   })
 }
 /**
- * 获取路径列表
+ * 获取活动列表
  */
-function getPathList(params){
-  return new Promise((resolve,reject) => {
-    axios.post(`/security-app/permission/path/list`,params)
-    .then((res) => {
-      resolve(res);
-    })
-    .catch((err)=>{
-      reject(err);
-    });
-  })
+function getActivityList(params){
+  return axios.post(`/operation-app/campaign/list`,params)
 }
 function getVuePathList(params){
   return new Promise((resolve,reject) => {
@@ -137,11 +129,11 @@ function getVuePathDetail(params){
   });
 }
 /**
- * 获取角色列表
+ * 获取类型列表
  */
-function getRoleList(params){
+function getActivityType(params){
   return new Promise((resolve,reject) => {
-    axios.post(`/security-app/permission/role/list`,params)
+    axios.post(`/operation-app/campaign/type/list`,params)
     .then((res) => {
       resolve(res);
     })
@@ -444,8 +436,8 @@ function deleteAccounts(params){
 }
 const rightsApi = {
   getRightsList,
-  getRoleList,
-  getPathList,
+  getActivityType,
+  getActivityList,
   getVuePathList,
   getAuthorList,
   createPath,

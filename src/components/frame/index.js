@@ -46,12 +46,43 @@ const Index = (props) => {
             style={{ height: '100%', borderRight: 0 }}
           >
             {routes.map(route=>{
-              return(
-                <Menu.Item key={route.path} onClick={p=>props.history.push(p.key)}>
-                  <Icon type={route.icon}></Icon>
-                  {route.title}
-                </Menu.Item>
-              )
+              if (route.children && route.children.length && !route.hideChildren) {
+                return(
+                  <SubMenu
+                    key={route.path}
+                    title={
+                      <span>
+                        <Icon type={route.icon}></Icon>
+                        {route.title}
+                      </span>
+                    }
+                  >
+                    {
+                      route.children.map(item=>{
+                        return(
+                          <Menu.Item key={item.path} onClick={p=>{
+                            // console.log(p);
+                            props.history.push(p.key)}
+                          }>
+                            <Icon type={item.icon}></Icon>
+                            {item.title}
+                          </Menu.Item>
+                        )
+                        
+                      })
+                    }
+
+                  </SubMenu>
+                )
+              }else{
+                return(
+                  <Menu.Item key={route.path} onClick={p=>props.history.push(p.key)}>
+                    <Icon type={route.icon}></Icon>
+                    {route.title}
+                  </Menu.Item>
+                )
+              }
+              
             })}
             {/* <SubMenu
               key="sub1"
